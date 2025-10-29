@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div>
+    <input id="name" placeholder="Enter your name" type="text">
+    <input id="age" placeholder="Enter your age" type="text">
+     <input id="status" placeholder="Enter payment status" type="text">
+    <button onclick="submitAge()">submit</button>
+</div>
+
+<div id="display"></div>
+ <script>
+    //   let age = 22
+      
+    //   if(age >= 20){
+    //     alert("You are old enough to succed");
+    //     console.log("You are old enough to succed");
+    //   }
+    // if user > 20 (paid or not) - proceed
+    // if user < 20 (must be paid) - proceed
+
+    function submitAge(){
+        let name = document.getElementById("name").value;
+      let age =  document.getElementById("age").value;
+       let status =  document.getElementById("status").value;
+
+         if(age > 20 || status == "paid"){
+        alert("You can proceed");
+        console.log("You can proceed");
+      }
+      else if(age == 10){
+        document.getElementById("display").innerHTML = "<h1> You are 10 years" + name + "</h1>";
+      }
+    else{
+         document.getElementById("display").innerHTML = "<h1>" + name + " You're not old enough. pls make payment";
+    }
+    }
+  
+
+
+
+    let person ="ola";
+    let surname = "Olowo";
+
+    console.log(person + " " + surname)
+    </script>
+</body>
+</html>

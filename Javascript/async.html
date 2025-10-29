@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <div id="display"></div>
+
+
+
+
+
+    <script>
+    // synchronous Programming -
+    // Each line of code runs one after the other
+
+        console.log("Run 1 first")
+
+        //  const fetchData = (callback) =>{
+        //     callback("Hello World")
+        // }
+
+
+        setTimeout(()=>{
+             console.log("Run 2 second")
+        }, 5000)
+
+       let myInterval = setInterval(()=>{
+            console.log("I am interval")
+        }, 5000)
+
+       setInterval(()=>{
+            clearInterval(myInterval)
+        }, 15000)
+
+
+        console.log("Run 3 third")
+
+        // Asynchronous Programming
+        // We can skip a line of code, to run it later or make JS wait fot it
+
+        // Callbacks
+        // setTimeouts
+        // setInterval
+        // async/await
+        // tryCatch
+        // .then/.catch
+
+        const fetchUsers = async () =>{
+            let data = await fetch("https://jsonplaceholder.typicode.com/users")
+            let users = await data.json()
+            users.map((user)=>{
+                document.getElementById("display").innerHTML += `<h1> id:${user.id}
+                 ${user.name} 
+                 ${user.username}
+                 ${user.email} 
+                 ${user.address.street}, ${user.address.city} </h1> <hr>`
+            })
+
+            console.log(data)
+            console.log(users)
+        }
+        console.log("Hello dev")
+        fetchUsers()
+       console.log("Hello Mikky")
+
+    //  fetchData((data)=>{
+    //     console.log(data)
+    //  })
+    </script>
+</body>
+</html>

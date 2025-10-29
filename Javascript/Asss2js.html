@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="table"></div>
+<input id="start" type="text" placeholder="Enter">
+<input id="end" type="text" placeholder="Enter">
+<input id="length" type="text" placeholder="Enter">
+<button onclick="check()">Check</button>
+
+
+
+
+
+
+
+
+
+
+    <script>
+    function check(){
+        let show;
+
+          let start = document.getElementById("start").value;
+          let end = document.getElementById("end").value;
+            let length = document.getElementById("length").value;
+
+            show = "";
+
+           for(let i =start; i <=end; i++){
+       console.log("This is i", i);
+         show += `<td>
+        <table>
+        <thead>
+         <tr>
+            <th>${i}</th>
+            </tr>
+            </thead>
+            <tbody>
+                `;
+
+                for (let j = 1; j<= length; j++){
+                    console.log("Hello j", i * j);
+                    show += `
+                    <tr>
+                    <td>${i} * ${j} = ${i * j}</td>
+                    </tr>
+                    `;
+                }
+          show += `
+          </tbody> </td>
+          </table>
+         `;
+     }
+     document.getElementById("table").innerHTML = show;
+    }
+
+
+    </script>
+</body>
+</html>

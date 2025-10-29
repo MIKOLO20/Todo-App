@@ -1,0 +1,112 @@
+<html>
+    <head>
+         <title></title>
+    </head>
+    <style>
+   .bord{
+    width: 400px;
+    border: 1px solid blue;
+    border-radius: 5px;
+    margin: auto;
+    padding: 20px;
+   }
+   .colo{
+    width: 380px;
+    height: 10vh;
+    background-color: rgb(36, 192, 93);
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px;
+   }
+   .calc{
+    color: white;
+    font-weight: 800;
+    font-size: larger;
+   }
+   .result{
+     color: white;
+    font-weight: bolder;
+    font-size: larger;
+    display: flex;
+     justify-content: end;
+     margin-top: 40px;
+   }
+   .parent{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 100px);
+    margin-top: 15px;
+     margin: auto;
+     gap: 10px;
+     margin-top: 20px;
+     cursor: pointer;
+   }
+   .keys{
+    border: 1px solid black;
+     display: flex;justify-content: center;align-items: center;font-size: large;font-family: cursive;font-weight: bolder;
+     border-radius: 5px;
+   }
+   .equals{
+    grid-row: span 2;
+   }
+   .zero{
+    grid-column: span 2;
+   }
+    </style>
+    <body>
+     
+<div class="bord">
+     <div class="colo">
+      <div id="calc" class="calc"></div>
+      <div id="result" class="result"></div>
+     </div>
+    <div class="parent">
+         <div onclick="clearOne()"class="keys">C</div>
+     <div onclick="clearAll()" class="keys">CE</div>
+     <div onclick="calculator(`/`)" class="keys">/</div>
+     <div onclick="calculator(`*`)" class="keys">*</div>
+     <div onclick="calculator(7)" class="keys">7</div>
+     <div onclick="calculator(8)" class="keys">8</div>
+     <div onclick="calculator(9)" class="keys">9</div>
+     <div onclick="calculator(`-`)" class="keys">-</div>
+     <div onclick="calculator(4)" class="keys">4</div>
+     <div onclick="calculator(5)" class="keys">5</div>
+     <div onclick="calculator(6)" class="keys">6</div>
+     <div onclick="calculator(`+`)" class="keys">+</div>
+     <div onclick="calculator(1)" class="keys">1</div>
+     <div onclick="calculator(2)" class="keys">2</div>
+     <div onclick="calculator(3)" class="keys">3</div>
+     <div onclick="showResult()" class="keys equals">=</div>
+     <div onclick="calculator(0)" class="keys zero">0</div>
+     <div onclick="calculator(`.`)" class="keys">.</div>
+    </div>
+</div>
+
+
+   <script>
+    function calculator(number){
+        let calc = document.getElementById("calc").innerText += number;
+    }
+    function showResult(){
+        let calc = document.getElementById("calc").innerText 
+        let result = eval(calc);
+       document.getElementById("result").innerText = result;
+    }
+    function clearOne(){
+        let text = document.getElementById("calc").innerText
+        let newText = text.slice(0, -1)
+        document.getElementById("calc").innerText = newText
+    }
+    function clearAll(){
+        document.getElementById("calc").innerText = "";
+         document.getElementById("result").innerText = "";
+    }
+   </script>
+
+
+
+
+
+    </body>
+</html>

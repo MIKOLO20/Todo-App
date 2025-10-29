@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <div>
+         <input id="name" type="text" placeholder="Enter your name">
+     <input id="age" type="text" placeholder="Enter your age">
+      <input id="email" type="text" placeholder="Enter your email">
+       <input id="address" type="text" placeholder="Enter your address">
+       <div id="display"></div>
+       <button type="button" onclick="submitForm()">Submit</button>
+    </div>
+
+
+
+
+
+
+
+       <script>
+  let peopleArr = []
+      
+    function submitForm(){
+        let name = document.getElementById("name").value
+         let age = document.getElementById("age").value
+          let email = document.getElementById("email").value
+           let address = document.getElementById("address").value
+
+           let person = {name, age, email, address};
+
+        //    let taken = peopleArr.find((user) =>{
+        //     return user.name === name || user.email === email;
+        //    });
+
+        //    if(taken){
+        //     alert("Name has been taken")
+        //    }
+        //    else{
+        //     peopleArr.push(person);
+        //    }
+
+
+     let taken = peopleArr.filter((user) =>{
+        return user.name.toLowerCase() === name.toLowerCase();
+     })
+   if(taken.length > 0){
+    alert("Name has been taken");
+   }
+   else{
+    peopleArr.push(person);
+   }
+      
+       document.getElementById("display").innerHTML = `
+       <h1>Name: ${person.name} </h1>
+       <h1>Age: ${person.age} </h1>
+       <h1>Email:  ${person.email} </h1>
+       <h1>Address:${person.address}</h1>`;
+
+        peopleArr.push(person)
+        displayPerson();
+
+    }
+
+     
+     function displayPerson(){
+        let show = "";
+        for(let i in peopleArr){
+            show += `
+             <h1>Name: ${peopleArr[i].name} </h1>
+       <h1>Age: ${peopleArr[i].age} </h1>
+       <h1>Email:  ${peopleArr[i].email} </h1>
+       <h1>Address:${peopleArr[i].address}</h1>`;
+        }
+        document.getElementById("display").innerHTML = show;
+     }
+
+
+
+      function displayPerson(){
+        let show = "";
+        peopleArr.forEach((user,)=>{
+            show += `
+             <h1>Name: ${user.name} </h1>
+       <h1>Age: ${user.age} </h1>
+       <h1>Email:  ${user.email} </h1>
+       <h1>Address:${user.address}</h1>`;
+        })
+        document.getElementById("display").innerHTML = show;
+      }
+
+
+
+       function displayPerson(){
+        let show = "";
+        peopleArr.map((user,)=>{
+            show += `
+             <h1>Name: ${user.name} </h1>
+       <h1>Age: ${user.age} </h1>
+       <h1>Email:  ${user.email} </h1>
+       <h1>Address:${user.address}</h1>`;
+        })
+        document.getElementById("display").innerHTML = show;
+      }
+
+//    Array find returnfirst as an object, item filter return multiple items as array
+// Return takes us to the last line 
+//    map and for each dp the same thing   
+       </script>
+</body>
+</html>

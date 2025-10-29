@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <div id="display"></div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+// persistent Data
+// 
+// Database || Local storage
+// 
+// Database
+// Relational - MySql, postgresql
+// Non=Relational Mongodb
+//  
+// JSON.strignify() - turnss object into strings
+// JSON.parse() - turns objects back to it's original data type 
+
+//   localStorage.setItem() - saves item
+//    localStorage.getItem() - retrieves item
+//     localStorage.removeItem() - removes item
+//     localStorage.clear() - clear all item
+
+
+let myName = "John doe";
+let myAge = 20;
+let myAddress = "opic";
+let myEmail = "michaelbolajoko@gamil.com"
+
+let myDetails = { name: "abiola", age: 20, address:"opic", email: "michaelbolajoko@gamil.com"};
+
+localStorage.setItem("username", myName);
+localStorage.setItem("userage", myAge);
+localStorage.setItem("useraddress", myAddress);
+localStorage.setItem("Email", myEmail)
+
+    console.log(myDetails);
+    console.log(typeof myDetails);
+
+    let userDetails = JSON.stringify(myDetails);
+    console.log(userDetails);
+    console.log(typeof userDetails);
+    
+
+    localStorage.setItem("userDetails", userDetails)
+
+    localStorage.setItem("detail", JSON.stringify(myDetails))
+
+    // To get back item
+
+    let details = localStorage.getItem("details");
+   let original = JSON.parse(details);
+
+   let userObj = JSON.parse(localStorage.getItem("details"));
+    console.log(userObj);
+
+    document.getElementById("display").innerHTML += `
+     <h1>Name: ${userObj.name} </h1>
+      <h1>Name: ${userObj.age} </h1>
+       <h1>Name: ${userObj.address} </h1>
+       `;
+        
+
+       localStorage.removeItem("");
+    //    localstorage.clear()
+    </script>
+</body>
+</html>

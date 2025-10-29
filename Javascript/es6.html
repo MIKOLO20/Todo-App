@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="display"></div>
+
+
+
+
+
+
+
+    <script>
+        // Variable Declarations
+        // - var
+        var name = "John"
+        //SS6 - let, const
+        let age = 20
+        const email= "mikky@gmail.com"
+        age = 39
+
+        // functions
+        // ES5 - function
+        function doSomething(){
+            alert("Hello Devs")
+        }
+        // ES6 - Arrow function
+        // () => retutn 2+3
+        const greetDev = () =>{
+            console.log("Hello Devs")
+        }
+        greetDev()
+        // Template literals
+        // Back Ticks
+        let fullname = `Doe ${name}`
+        // let fullname = `Doe` + "" + name
+        console.log(fullname)
+
+        // retutn statement
+
+        const addNum = () =>{
+            let a = 2
+             let b = 5
+              let c = 9
+
+              let d = a + b + c
+              return d;
+            //  console.log("d")
+        }
+        document.getElementById("display").innerHTML += `<h1>${addNum()}</h1>`
+
+        const solvenum = (a, b, c) =>{
+            let d = a + b - c
+            return d;
+        }
+         document.getElementById("display").innerHTML += `<h1>${solvenum(3, 9, 5)}</h1>`
+         
+
+        //  HOF
+        let arr = [1,2,3,4,5,6,7]
+
+        const userDetails = () =>{
+            let name = "mikky"
+            let age = 20
+            let address = "opic"
+            let email = "mikky@gmail.com";
+              return{
+                name,age,address,email,
+              }
+           
+        };
+       document.getElementById("display").innerHTML = `
+            <h1>Name: ${userDetails().name}  </h1>
+            <h1>age: ${userDetails().age}</h1>
+            <h1>address: ${userDetails().address}</h1>
+            <h1>email: ${userDetails().email}</h1>`;
+
+
+         
+        arr.map((user)=> console.log(user * 2))
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    .parent{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 250px);
+        grid-template-rows: repeat(4, 450px);
+        justify-content: center;padding: 0 0 70px 0;gap: 15px;
+    }
+    .child{
+        border: 1px solid blue;
+        border-radius: 15px;
+        font-size: medium;
+    }
+    .child img{
+        width: 100%;
+        height: 40%;
+    }
+    .child p{
+        margin-left: 10px;
+        max-height: 200px !important;
+    }
+</style>
+<body>
+    <div class="container mx-auto mt-5">
+     <div>
+        <h2 class="text-primary text-center">Post by people</h2>
+        <div class="text-center mb-5">
+            <button onclick="fetchPosts()" class="btn btn-primary mx-auto">Posts</button>
+        </div>
+        <div  class="parent" id="display"></div>
+        <div class="text-center mb-5">
+            <button onclick="fetchPosts(1)"   class="btn btn-primary btn-sm" id="pg1">1</button>            
+            <button onclick="fetchPosts(2)"  class="btn btn-primary btn-sm" id="pg2">2</button>        
+        <button onclick="fetchPosts(3)"  class="btn btn-primary btn-sm" id="pg3">3</button>
+            <span class="text-primary">....</span>
+             <button onclick="fetchPosts(`next`)" id="next" class="btn btn-primary btn-sm">Next</button></butto>
+             <button onclick="fetchPosts(`prev`)" id="prev" class="btn btn-primary btn-sm">Prev</button>
+        </div>
+     </div>
+    </div>
+
+
+
+    <script src="./asyncAss.js"></script>
+</body>
+</html>

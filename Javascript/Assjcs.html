@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            text-align: center;
+            background-color: aqua;
+        }
+        .divv{
+            width: 400px;
+            height: 30vh;
+            line-height: 30px;
+           border: 1px solid;
+            display: grid;
+            grid-row: 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+        }
+      .cla{
+          width: 400px;
+            height: 30vh;
+            line-height: 30px;
+           border: 1px solid;
+            display: grid;
+            grid-row: 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            margin-top: 20px;
+      }
+      .clas{
+        width: 400px;
+            height: 30vh;
+            line-height: 30px;
+           border: 1px solid;
+            /* display: grid; */
+            /* grid-row: 1fr 1fr; */
+            gap: 10px;
+            padding: 10px;
+            margin-top: 20px;
+      }
+        button{
+            background-color: green;
+            color: white;
+            font-weight: bolder;
+            width: 100px;
+            height: 4vh;
+        }
+    </style>
+</head>
+<body>
+   <div id="display"></div>
+   <div class="divv">
+     <input id="name" type="text" placeholder="Enter your name">
+    <input id="score" type="text" placeholder="Enter your score">
+    <button onclick="grade()">Check</button>
+   </div>
+   <div class="cla"> <input type="number" name="" id="num" placeholder="Enter your number">
+    <button onclick="number()">Check</button></div>
+
+   <div class="clas"> <input type="number" name="" id="number" placeholder="Enter your number">
+     <button onclick="check()">check</button>
+     </div>
+     
+
+
+
+
+    <script>
+        function grade(){
+            let name = document.getElementById("name").value;
+            let score = document.getElementById("score").value;
+
+
+            if (name == "" || score == ""){
+                // alert("field are required");
+             document.getElementById("display").innerHTML = "<h1> please enter required details </h1>"
+            }
+            else if (score < 0 || score > 100){
+                 document.getElementById("display").innerHTML = "<h1> Invalid Input </h1>"
+            }
+           else if (score <= 39){
+            document.getElementById("display").innerHTML = "<h1>Welcome,"  + name +  " Grade F you failed"
+           }
+           else if (score <= 49){
+              document.getElementById("display").innerHTML = "<h1>Welcome,"  + name +  " Grade D you failed"
+           }
+           else if (score <= 59){
+             document.getElementById("display").innerHTML = "<h1>Welcome,"  + name +  " Grade C you passed"
+           }
+           else if (score <= 69){
+             document.getElementById("display").innerHTML = "<h1>Welcome,"  + name +  " Grade B you Average"
+           } 
+            else if (score >=70 && score <=100){
+             document.getElementById("display").innerHTML =   `<h1>Welcome ${name} Grade A you excellent`
+           } 
+        }
+       function number(){
+        let num = document.getElementById("num").value;
+
+        if (num == ""){
+            document.getElementById("display").innerHTML = "<h1> Inalid details </h1>"
+        }
+        else if (num % 2 == 0){
+            document.getElementById("display").innerHTML = "<h1> Even number </h1>"
+        }
+        else if (num % 2 != 0){
+             document.getElementById("display").innerHTML = "<h1> Odd number  </h1>"
+        }       
+       }
+       function check(){
+        let number = document.getElementById("number").value;
+
+         if (number == ""){
+            document.getElementById("display").innerHTML = "<h1> Inalid number </h1>"
+        }
+        else if (number % 3 == 0 && number % 5 == 0){
+             document.getElementById("display").innerHTML = "<h1> fizz buzz </h1>"
+        }
+         else if (number % 3 == 0){
+             document.getElementById("display").innerHTML = "<h1> fizz </h1>"
+        }
+         else if (number % 5 == 0){
+             document.getElementById("display").innerHTML = "<h1> buzz </h1>"
+        }
+        else{
+             document.getElementById("display").innerHTML = "<h1> not divisible by 3 & 5</h1>"
+        }
+       }
+    </script>
+</body>
+</html>

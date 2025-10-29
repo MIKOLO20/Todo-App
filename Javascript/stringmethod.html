@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div id="display"></div>
+   <input type="text" id="name" placeholder="enter your name">
+   <button onclick="enterName()">submit</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        let name = "john"
+        let surname = "Wick"
+         console.log(name.length)
+          console.log(name.charAt(2))
+           console.log(name.charCodeAt(3))
+           console.log(name + " " + surname)
+    document.getElementById("display").innerHTML += `<h1>${name + " " + surname} </h1>`;
+
+    // string template literal
+       document.getElementById("display").innerHTML += `<h1>${name} ${surname} </h1>`;
+
+       let a = 3
+       let b = "mikky"
+       console.log(a+b)
+
+        document.getElementById("display").innerHTML += `<h1> ${name.toLowerCase()} ${surname.toLowerCase()}`;
+         document.getElementById("display").innerHTML += `<h1> ${name.toUpperCase()} ${surname.toUpperCase()}`;
+
+            function enterName(){
+                let name = document.getElementById("name").value.trim().
+                toLowerCase();
+                console.log(name);
+                if(name == "mikky"){
+                     document.getElementById("display").innerHTML += `<h1>Welcome ${name} </h1>`;
+                }
+                else if (name == ""){
+                    alert("input mikky");
+                }
+            }
+       
+
+
+         let word = "   Hello   "
+
+         console.log(word);
+          console.log(word.trim().length);
+           console.log(word.trimStart().length);
+            console.log(word.trimEnd().length);
+
+            let balance = "20"
+
+        console.log(balance.padStart(6, "0"))
+        console.log(balance.padEnd(5, "*"))
+    </script>
+</body>
+</html>

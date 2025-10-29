@@ -1,0 +1,64 @@
+//Naming conventions
+pascal casing - students, NameOfStudents, AgeOfSqiAbeokutaSoftwareStudents - java
+Camel Casing - Students, nameOfStudents, ageOfSqiAbeokutaSoftwareStudents - javascript
+Snake Casing - students, name_of_students, age_Of_Sqi+Abeokuta_Software_Students - phyton
+Kebab Casing - students, name_of_students, age_Of_Sqi+Abeokuta_Software_Students - CSS
+
+//Fundamental of all programming language
+1. Arithmetic operations
+2. Logical operations
+3. CRUD operations
+  *C - Create (saving/addind a new data) 
+  *R - Read (fetching saved data)
+  *U - (updating saved data)
+  *D - Delete (deleting saved data )
+
+  //Data Types
+  1. String - "abcde12345", '1234', '', "", "Hi John"
+  2. Number - 0123456789
+  3. Boolean - true, false
+  4. BigInt - 9.99999999999e + 23 (An extremely large number)
+  5. Undefined - (It has no value yet)
+  6. Null - (purposely declaring a variable empty)
+  7. Object - Arrays, Object, Date, Math
+
+
+  //Arithmetic Operators
+  1. + - Addition
+  2. - - Subtraction
+  3. * - Multiplication
+  4. / - Division
+  5. % - Modulud (Remainder) 5 % 3 = 2, 4 % 4 = 0
+
+
+  //Unary Operators 
+  1. ++ - Increment by 1 e.g.
+  let a = 5
+  a++ (a is now 6)
+  2. -- - Decrement by 1 e.g.
+  lat a = 5
+  a -- (a is now 4)
+
+  //Logical Operators
+  1. && - add 
+  2. || - or
+  3. != - not equal to
+  4. == checks value alone (not strict) e.g. 5 and "5" is true 
+  5. === checks value alone (strict) e.g. 5 and "5" is false
+  6. >
+  7. <
+  8. >=
+  9. <=
+
+
+  variable declaration
+  var -// stopped being used from 2015
+  2015 onwards
+  let - if variable is suceptible to change
+  const - variable cannot change
+
+  javascript Conditionals
+  1. if statements
+  2. Logical Operators
+  3. Else if statements
+  4. Else statements

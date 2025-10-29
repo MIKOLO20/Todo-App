@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="display" id="display"></div>
+   <input id="start" type="text" placeholder="start of table"> 
+   <input id="end" type="text" placeholder="end of table">
+   <input id="length" type="text" placeholder="length of table">
+   <button onclick="showTable()">Submit</button>
+ <script>
+
+  function whileLoop(){
+   let i = 3
+    while(i <= 6){
+   console.log("This is", i);
+   i++
+    }
+  }
+ whileLoop()
+
+
+  function anotherWhile(){
+    let i = 8
+    while(i >= 2){
+        console.log("i is going down", i)
+        i--
+    }
+  }
+  anotherWhile()
+ 
+ function forLoop(){
+    for (let i = 3; i <= 6; i++){
+        console.log("This is another", i)
+    }
+ }
+  forLoop()
+
+
+
+  let i = 5;
+  do{
+    console.log("You can get a biscuit", i);
+    i--;
+  } 
+  while(i >= 1);
+
+
+  function showTable(){
+
+
+     let start = document.getElementById("start").value;
+     let end = document.getElementById("end").value;
+     let length = document.getElementById("length").value;
+    
+    
+    
+    for(let i = 1; i <= 5; i++){
+    console.log("This is i", i);
+    for(let j = 1; j <= 4; j++){
+        console.log("Hello j", i * j);
+        document.getElementById("display").innerHTML += `<h1>${i} * ${j} = ${
+            i * j
+            } </h1>`;
+    }
+      document.getElementById("display").innerHTML += `<hr>`;
+  }
+  }
+  showTable()
+
+
+//   function doWhileLoop(){
+//     let i = 5
+//     do{
+//         console.log("You can get a biscuit", i)
+//         i--
+//     }
+//     while(i >= 1){
+
+//   }
+
+
+   
+
+    // let i = 3
+    // while(i <= 6){
+
+    // }
+//   everyone get 1 biscuit,regardless of age
+// everyone from 5 and below must get a biscuit for each year of their age
+//    it run the loop at least once the check the condition if it will run multiple times 
+    </script>
+</body>
+</html>

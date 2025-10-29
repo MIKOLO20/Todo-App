@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parameterized function</title>
+</head>
+<body>
+
+
+
+    <button onclick="greetPeople(`john`)">Greet john</button>
+     <button onclick="greetPeople(`ibukun`)">Greet ibukun</button>
+
+  <button onclick="greetPeople(`someone`)">Greet Someone</button>
+    <div id="display"></div>
+
+
+
+
+
+
+<script>
+        function greetPeople(Param){
+            document.getElementById("display").innerHTML += `<h1>Hello  ${Param} </h1>`;
+        }
+
+        // greetPeople("john");
+        //  greetPeople("jane");
+        //   greetPeople(29);
+        //    greetPeople(true);
+        //     greetPeople("+");
+
+    </script>
+</body>
+</html>

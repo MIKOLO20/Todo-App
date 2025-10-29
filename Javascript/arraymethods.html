@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+    <div id="display"></div>
+    <input type="text" placeholder="enter name" id="name">
+     <input type="text" placeholder="enter age" id="age">
+      <input type="text" placeholder="enter email" id="email">
+      <button onclick="submitDet()">Submit</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+         let fruitArr = ["Apple", "Orange", "Mango", "Banana", "Coconut", "Eba", "Amala", "fufu"]
+         let mikktyArr = ["Mikky", 20, "mikky@gmail.com", "indomie", "opic"]
+
+
+         console.log(fruitArr)
+          console.log(fruitArr.length);
+           console.log(fruitArr.toString());
+
+           document.getElementById("display").innerHTML += `<h1> ${fruitArr.toString()} </h1>`
+
+            
+           console.log(fruitArr[3]);
+           console.log(fruitArr.at(3));
+           console.log(fruitArr.join(mikktyArr))
+
+           fruitArr.push("strawberry")
+           mikktyArr.pop()
+
+           console.log(fruitArr)
+           console.log( mikktyArr)
+
+
+
+        //    for (let i = 0; i <= 7; i++){
+        //      document.getElementById("display").innerHTML += `<h1>${fruitArr[i]}
+        //         </h1>`
+        //    }
+
+        //      for (let i = 0; i < fruitArr.length; i++){
+        //      document.getElementById("display").innerHTML += `<h1>${fruitArr[i]}
+        //         </h1>`
+        //    }
+
+          for (let i in fruitArr){
+             document.getElementById("display").innerHTML += `<h1>${fruitArr[i]}
+                </h1>`
+           }
+        let userArr = []
+           
+        function submitDet(){
+            let name = document.getElementById("name").value
+            let age = document.getElementById("age").value
+            let email = document.getElementById("email").value
+
+
+         if (name == "" || age == "" || email == ""){
+            alert("All details are required")
+         }
+
+      else{
+        let userObj = {name, age, email}
+        // console.log(userObj)
+
+        userArr.push(userObj)
+        console.log(userArr)
+                    document.getElementById("display").innerHTML += "";
+        
+                    for (let i in userArr){
+             document.getElementById("display").innerHTML += `
+             <h1>Name: ${userArr[i].name} </h1>
+              <h1>Age: ${userArr[i].age} </h1>
+               <h1>Email: ${userArr[i].email} </h1>`;
+        }
+      }
+
+
+        }
+    </script>
+</body>
+</html>
