@@ -8,7 +8,7 @@ if (localuser){
     userArr = localuser;
     displayUser();
 }
-function registerUser(){
+const registerUser = () =>{
     let firstname = document.getElementById("firstname").value;
     let lastname = document.getElementById("lastname").value;
     let email = document.getElementById("email").value;
@@ -16,14 +16,14 @@ function registerUser(){
 
 
     let taken = userArr.find((user) =>{
-        return user.firstname == firstname || user.lastname == lastname || user.email == email || user.address == address;
+        return user.email == email;
     });
 
     if (firstname == "" || lastname == "" || email == "" || address == ""){
         alert("All fields are required");
     }
     else if (taken){
-        alert("info already been taken")
+        alert("email has been taken");
     }
     else{
         let userObj = {firstname, lastname, email, address}
@@ -35,12 +35,10 @@ function registerUser(){
        document.getElementById("address").value = "";
        
      localStorage.setItem("userArr", JSON.stringify(userArr))
-     displayUser();
-      }
-      
-
- function displayUser() {
-    let visible = '';
+   displayUser();
+}
+function displayUser(){
+    visible = "";
     userArr.map((user, i) =>{
         visible += `
         <h1>${i+1}</h1>
@@ -51,9 +49,9 @@ function registerUser(){
         </hr>`;
     })
     document.getElementById("display").innerHTML = visible;
- }  
- 
- function searchUser(){
+}
+
+ const searchUser = () =>{
     let show = "";
     let query = document.getElementById("query").value;
 
@@ -66,11 +64,10 @@ function registerUser(){
         );
     });
 
-    if (foundUser.length == 0){
-        alert("user not found");
-    } else if(foundUser.length == userArr.length){
-        alert("Please narrow your search");
-    } else{
+   if(foundUser.length == 0){
+    alert("invalid search")
+   }
+    else{
         foundUser.map((foundUser, i) =>{
             show += `
             <h1> ${i+1} </h1>

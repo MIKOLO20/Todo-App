@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Object Oriented Programming</h1>
+      <div>
+        <h3>Absraction</h3>
+        <h3>Inheritance</h3>
+        <h3>Polymorphism</h3>
+        <h3>Encapsulation</h3>
+      </div>
+     <form action="">
+        <div>
+            <label for="">Brand</label>
+            <input type="text" name="" id="">
+        </div>
+         <div>
+            <label for="">Model</label>
+            <input type="text" name="" id="">
+        </div>
+         <div>
+            <label for="">Color</label>
+            <input type="text" name="" id="">
+        </div>
+         <div>
+            <label for="">Year</label>
+            <input type="text" name="" id="">
+        </div>
+        <div>
+            <button id="submit" type="button">Submit</button>
+        </div>
+     </form>
+
+     <div id="display"></div>
+     <div id="show"></div>
+
+    <script>
+        class Human{
+            constructor(name, age, complexion, address, occupation){
+           (this.name = name),
+           (this.age = age),
+           (this.complexion = complexion),
+           (this.address = address),
+           (this.occupation = "software engineer");
+            }
+            greet(param){
+          document.getElementById("display").innerHTML += `<h2>Hello, my name is ${this.name}. I am ${this.age} years old. I live in ${this.address} and i work as a ${this.occupation}. My favorite food is ${param}
+            </h2>`;
+            console.log("Good afternoon devs");
+            }
+            run(){
+                console.log("Running at 20km/hr");
+            }
+        }
+        
+        class player extends Human{
+            constructor(name, age, complexion, address, occupation, sports){
+             super(name, age, complexion, address, occupation)
+             this.sport = sport;
+            }
+
+            shoot(){
+                document.getElementById("show").innerHTML += `<h2>shoots the ball</h2>`;
+            }
+        }
+        const player1 = new Player(
+            "Mike",
+              25,
+              "Dark",
+              "New york",
+              "Athlete",
+              "Basketball",
+        )
+        console.log(player1);
+        player1.greet("indomie");
+        player1.shoot();
+        const human1 = new Human("Abiola", 20, "Fair", "Kuto");
+         const human2 = new Human("John", 28, "dark", "Lagos");
+        
+         human1.greet("eba");
+
+
+        //  human1.shoot()
+        //  console.log(human1)
+        //  console.log(human2)
+
+        //  human1.greet("Rice")
+        //  human2.run()
+        //  human2.greet("Beans")   
+        
+        class Car{
+            constructor(brand, model, color, year){
+             this.brand = brand;
+             this.model = model;
+             this.color = color;
+             this.year = year;
+            }
+            run(){
+                document.getElementById("show").innerHTML = `<h2>My ${this.brand} ${this.model} is running at 100km/hr
+                    </h2>`
+            }
+        }
+         
+         let cars = []
+         let show;
+         
+         document.getElementById("submit").addEventListener("click", ()=>{
+            let brand = document.getElementsByTagName("input")[0].value;
+            let model = document.getElementsByTagName("input")[1].value;
+            let color = document.getElementsByTagName("input")[2].value;
+            let year = document.getElementsByTagName("input")[3].value;
+
+            let newCar = new Car(brand, model, color, year)
+            console.log(newCar);
+            cars.push(newCar);
+
+            show = "";
+            cars.forEach((car, index) =>{
+                show +=`<h3>Brand: ${car.brand}  | Model:${car.model} | Color: ${car.color}  | Year: ${car.year}
+                    </h3>`;
+            })
+            document.getElementById("display").innerHTML = show;
+         })
+         const carRun = (index) =>{
+            cars[index].run();
+         };
+
+
+
+
+
+
+
+
+
+
+
+         </script>
+</body>
+</html>

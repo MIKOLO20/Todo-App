@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assposition.css">
+     <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <input type="password" name="" id="password"><span id="eye"><i class="fa-solid fa-eye-slash" id="eyeclosed" onclick="showpassword()"></i></span>
+
+
+
+    <script>
+        const showpassword = () =>{
+            document.getElementById("eye").innerHTML = `<i class="fa-solid fa-eye" onclick="hidepassword()"></i>`;
+            document.getElementById("password").type = "text";
+        }
+        const hidepassword = ()=>{
+             document.getElementById("eye").innerHTML = `<i class="fa-solid fa-eye-slash" id="eyeClosed" onclick="showpassword()"></i>`;
+            document.getElementById("password").type = "password";
+        }
+    </script>
+</body>
+</html>

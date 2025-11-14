@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Html Graphics/canvas</title>
+  </head>
+  <body>
+    <div>
+      <canvas
+        id="myCanvas"
+        style="width: 500px; height: 500px; border: 1px solid"
+      >
+      </canvas>
+    </div>
+    <button id="start">start game</button>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+      //    ctx.moveTo(0, 0);
+      // ctx.lineTo(500, 500);
+      // ctx.stroke();
+      // ctx. moveTo (500, 0);
+      //  ctx. lineTo(0, 500) ;
+      //  ctx.strokeStyle = "blue"
+      //  ctx.stroke ();
+      //  ctx.moveTo (250, 0);
+      //  ctx.lineTo(250, 250);
+      //  ctx.stroke ();
+      //   ctx.moveTo (0, 250);
+      //   ctx.lineTo (500, 250);
+      //   ctx.stroke();
+
+      // ctx.beginPath();
+      // ctx.arc(250, 250, 100, 0, 2* Math.PI);
+      // ctx.stroke()
+
+      //         ctx.beginPath();
+      //         ctx.arc(250, 250, 100, 0, 2 * Math.PI)
+      //         ctx.stroke();
+      //         ctx.beginPath();
+      //         ctx.arc(200, 220, 10, 0, 2 * Math.PI)
+      //         ctx.fillStyle = "yellow";
+      //         ctx.strokeStyle = "yellow";
+      //         ctx.fill();
+      //         ctx.stroke();
+      //         ctx.beginPath();
+      //          ctx.arc(290, 220, 10, 0, 2 * Math.PI)
+      //         ctx.fillStyle = "yellow";
+      //         ctx.strokeStyle = "yellow";
+      //         ctx.fill();
+      //         ctx.stroke();
+      //         ctx.beginPath();
+      //          ctx.arc(250, 300, 40, 3, 2 * Math.PI)
+      //         ctx.strokeStyle = "yellow";
+      //         ctx.stroke();
+
+      let player = { x: 210, y: 420, w: 40, h: 40 };
+      let enemies = [];
+      let ep = [0, 60, 120, 180, 230, 280, 340, 390, 440];
+
+      document.getElementById("start").addEventListener("click", () => {
+        setInterval(gameLoop, 800);
+        setInterval(spawnEnemy, 800);
+      });
+      function spawnEnemy() {
+        let rand = Math.floor(Math.random() * ep.length);
+        enemies.push({ x: ep[rand], y: 0, w: 40, h: 10 });
+      }
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "red";
+        ctx.fillRect(player.x, player.y, player.w, player.h);
+        enemies.forEach((enemy) => {
+          ctx.fillStyle = "blue";
+          enemy.y += 10;
+          ctx.fillRect(enemy.x, enemy.y, enemy.w, enemy.h);
+        });
+      }
+
+      window.onkeydown = (e) => {
+        console(e);
+        if (e.keycode == 39 && player.x > 420) {
+          ctx.clearRect(player.x, player.y, player.w, player.h);
+          player.x += 10;
+          ctx.fillRect(player.x, player.y, player.w, player.h);
+        }
+        if (e.keycode == 37 && player.x > 0) {
+          ctx.clearRect(player.x, player.y, player.w, player.h);
+          player.x -= 10;
+          ctx.fillRect(player.x, player.y, player.w, player.h);
+        }
+        if (e.keycode == 38 && player.y > 0) {
+          ctx.clearRect(player.x, player.y, player.w, player.h);
+          player.y -= 10;
+          ctx.fillRect(player.x, player.y, player.w, player.h);
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -44,7 +44,7 @@ function Ticket(){
         <td>${ticket[i].name}</td>
         <td>${ticket[i].last}</td>
         <td>${ticket[i].date}</td>
-        <td>${ticket[i].seat}</td>`
+        <td>${ticket[i].seat}</td> </tr>` 
     }
     document.getElementById("display").innerHTML = visible;
  }

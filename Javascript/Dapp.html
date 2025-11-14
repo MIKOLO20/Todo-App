@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decentralized Platform Wallet</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Basic Reset & Body Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0; /* Remove horizontal padding for full width on mobile */
+        }
+
+        /* Section Styling */
+        section {
+            padding: 40px 20px; /* Add horizontal padding for content */
+            text-align: center;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-of-type {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        h1, h2 {
+            color: #1a237e; /* Darker blue for headings */
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.2em;
+        }
+
+        h2 {
+            font-size: 1.8em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 25px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: #fff;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 30px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Services Section */
+        .services-section {
+            background-color: #f8f9fa;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 2.5em;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #1a237e;
+        }
+
+        .service-card p {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Wallet Section */
+        .wallet-section {
+            padding-top: 60px;
+            background-color: #fff;
+            position: relative; /* For DappsTools branding */
+        }
+
+        .wallet-section .brand-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.8em;
+            color: #999;
+            font-weight: bold;
+        }
+
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            max-width: 900px; /* Limit width for better grid appearance */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wallet-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 5px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+        }
+
+        .wallet-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .wallet-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            border-radius: 50%; /* Make placeholder images round if desired */
+        }
+
+        .wallet-item span {
+            font-size: 0.75em;
+            color: #444;
+            word-break: break-word; /* Ensure long names wrap */
+            white-space: normal;
+        }
+
+        /* Ready to Start Section */
+        .ready-to-start-section {
+            background-color: #f0f2f5;
+            padding: 60px 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .ready-to-start-title {
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .ready-to-start-section h2 {
+            font-size: 1.6em;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .input-group textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            resize: vertical;
+            font-family: inherit;
+            color: #333;
+        }
+
+        .input-group textarea::placeholder {
+            color: #999;
+        }
+
+        .get-started-alt {
+            margin-top: 20px;
+            padding: 14px 30px;
+        }
+
+        .get-started-alt i {
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        .main-footer {
+            background-color: #1a237e; /* Dark blue for footer */
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #007bff;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #eee;
+            background-color: #f0f2f5;
+        }
+
+        .tab-button {
+            flex-grow: 1;
+            padding: 15px 10px;
+            border: none;
+            background-color: transparent;
+            font-size: 1em;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+            background-color: #fff;
+        }
+
+        .tab-button:hover:not(.active) {
+            color: #0056b3;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .tab-pane {
+            display: none;
+            text-align: left;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .tab-pane label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .tab-pane textarea,
+        .tab-pane input[type="text"],
+        .tab-pane input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: inherit;
+            color: #333;
+            resize: none; /* Prevent textarea from being resized by user */
+        }
+
+        .tab-pane textarea::placeholder,
+        .tab-pane input::placeholder {
+            color: #aaa;
+        }
+
+        .tab-pane .btn-primary {
+            width: 100%;
+            padding: 14px;
+            margin-top: 0;
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1200px;
+                padding: 0 20px;
+            }
+
+            section {
+                padding: 60px 40px;
+            }
+
+            h1 {
+                font-size: 3em;
+            }
+
+            h2 {
+                font-size: 2.2em;
+            }
+
+            .hero-section {
+                flex-direction: row;
+                text-align: left;
+                padding: 80px 40px;
+            }
+
+            .hero-content {
+                flex: 1;
+                padding-right: 30px;
+            }
+
+            .hero-image {
+                flex: 1;
+                text-align: right;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns on larger screens */
+            }
+
+            .wallet-grid {
+                grid-template-columns: repeat(6, 1fr); /* 6 columns on larger screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .hero-section {
+                padding: 40px 15px;
+            }
+            .service-grid {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+            }
+            .wallet-grid {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns on small screens */
+            }
+            .modal-content {
+                width: 95%;
+            }
+            .modal-body {
+                padding: 20px;
+            }
+            .tab-button {
+                padding: 12px 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Decentralized Platform Wallet</h1>
+                <button class="btn-primary get-started-btn">GET STARTED</button>
+            </div>
+            <div class="hero-image">
+                <!-- Illustration from the video - using a placeholder -->
+                <img src="https://via.placeholder.com/300x200/007bff/ffffff?text=Decentralized+Platform" alt="Decentralized Platform Illustration">
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2>Our Services</h2>
+            <p class="subtitle">Kindly select one of the options below</p>
+            <div class="service-grid">
+                <div class="service-card">
+                    <i class="fas fa-th-large service-icon"></i>
+                    <h3>Swap/Exchange</h3>
+                    <p>We will support you in any related issues with swapping and/or exchange of coins. Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-cube service-icon"></i>
+                    <h3>MINT NFT</h3>
+                    <p>Interaction between NFT Blockchain and mobile browsers are supported via mobile deep linking Having complete control of your NFT Minting. Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-cloud-upload-alt service-icon"></i>
+                    <h3>VALIDATION</h3>
+                    <p>Validation completely decentralized supports wallet Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-gifts service-icon"></i>
+                    <h3>CLAIM REWARDS</h3>
+                    <p>For claiming of Rewards Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-chart-line service-icon"></i>
+                    <h3>RECOVERY</h3>
+                    <p>Recovery wallet TATs Dapps with Blockchain and DeFi Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-check-circle service-icon"></i>
+                    <h3>RECTIFICATION</h3>
+                    <p>Rectification support warranties completely decentralized Kindly click here</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-archway service-icon"></i>
+                    <h3>BRIDGE</h3>
+                    <p>It enables applications built on different blockchains to communicate with and interact with each other, something which was never before possible, therefore unlocks a groundbreaking development for the blockchain space as a whole. On launch, Ethereum, BSC, Avalanche, and Polygon – four of the leading blockchains and protocols – are supported, with capabilities to add new blockchains built-in to the Alliance Bridge protocol. Kindly click here.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-lock service-icon"></i>
+                    <h3>STAKING</h3>
+                    <p>STAKE/ UNSTAKE ASSETS TO REAP PROFITS Kindly click here.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wallet Connection Section -->
+        <section class="wallet-section">
+            <span class="brand-logo">DappsTools</span>
+            <h2>Easy Smart Fix For Every Wallet</h2>
+            <p class="subtitle">Select your preferable wallet and get connected to create a safe and secure web extension.</p>
+            <div class="wallet-grid">
+                <!-- Wallet logos - using placeholders for now. In a real app, these would be actual images. -->
+                <div class="wallet-item" data-wallet="Trust Wallet">
+                    <img src="https://via.placeholder.com/60/007bff/ffffff?text=TW" alt="Trust Wallet Logo">
+                    <span>Trust Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Sui Wallet">
+                    <img src="https://via.placeholder.com/60/4285F4/ffffff?text=SW" alt="Sui Wallet Logo">
+                    <span>Sui Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="OKX Wallet">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=OKX" alt="OKX Wallet Logo">
+                    <span>OKX Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Sonar">
+                    <img src="https://via.placeholder.com/60/FFD700/000000?text=SON" alt="Sonar Logo">
+                    <span>Sonar</span>
+                </div>
+                <div class="wallet-item" data-wallet="Keplr">
+                    <img src="https://via.placeholder.com/60/6A5ACD/ffffff?text=KPL" alt="Keplr Logo">
+                    <span>Keplr</span>
+                </div>
+                <div class="wallet-item" data-wallet="Leap Wallet">
+                    <img src="https://via.placeholder.com/60/3CB371/ffffff?text=LEAP" alt="Leap Wallet Logo">
+                    <span>Leap Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="STEPN">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=STP" alt="STEPN Logo">
+                    <span>STEPN</span>
+                </div>
+                <div class="wallet-item" data-wallet="Unisat">
+                    <img src="https://via.placeholder.com/60/FF8C00/ffffff?text=UNI" alt="Unisat Logo">
+                    <span>Unisat</span>
+                </div>
+                <div class="wallet-item" data-wallet="Hotwallet">
+                    <img src="https://via.placeholder.com/60/FF6347/ffffff?text=HOT" alt="Hotwallet Logo">
+                    <span>Hotwallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Stake Cube Wallet">
+                    <img src="https://via.placeholder.com/60/20B2AA/ffffff?text=SCW" alt="Stake Cube Wallet Logo">
+                    <span>Stake Cube Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Metamask">
+                    <img src="https://via.placeholder.com/60/FF7F50/ffffff?text=MM" alt="Metamask Logo">
+                    <span>Metamask</span>
+                </div>
+                <div class="wallet-item" data-wallet="Solfare">
+                    <img src="https://via.placeholder.com/60/DAA520/ffffff?text=SOL" alt="Solfare Logo">
+                    <span>Solfare</span>
+                </div>
+                <div class="wallet-item" data-wallet="Wallet Connect">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=WC" alt="Wallet Connect Logo">
+                    <span>Wallet Connect</span>
+                </div>
+                <div class="wallet-item" data-wallet="Uniswap">
+                    <img src="https://via.placeholder.com/60/FF69B4/ffffff?text=UNIS" alt="Uniswap Logo">
+                    <span>Uniswap</span>
+                </div>
+                <div class="wallet-item" data-wallet="Phantom">
+                    <img src="https://via.placeholder.com/60/8A2BE2/ffffff?text=PH" alt="Phantom Logo">
+                    <span>Phantom</span>
+                </div>
+                <div class="wallet-item" data-wallet="Coinomi">
+                    <img src="https://via.placeholder.com/60/00BFFF/ffffff?text=COIN" alt="Coinomi Logo">
+                    <span>Coinomi</span>
+                </div>
+                <div class="wallet-item" data-wallet="Coinbase">
+                    <img src="https://via.placeholder.com/60/0052FF/ffffff?text=CB" alt="Coinbase Logo">
+                    <span>Coinbase</span>
+                </div>
+                <div class="wallet-item" data-wallet="Gnosis Safe Multisig">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=GNOS" alt="Gnosis Safe Multisig Logo">
+                    <span>Gnosis Safe Multisig</span>
+                </div>
+                <div class="wallet-item" data-wallet="Xverse Wallet">
+                    <img src="https://via.placeholder.com/60/4B0082/ffffff?text=XV" alt="Xverse Wallet Logo">
+                    <span>Xverse Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="MagicEden">
+                    <img src="https://via.placeholder.com/60/8B008B/ffffff?text=ME" alt="MagicEden Logo">
+                    <span>MagicEden</span>
+                </div>
+                <div class="wallet-item" data-wallet="HaloDefi Wallet">
+                    <img src="https://via.placeholder.com/60/32CD32/ffffff?text=HALO" alt="HaloDefi Wallet Logo">
+                    <span>HaloDefi Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Argent">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=ARG" alt="Argent Logo">
+                    <span>Argent</span>
+                </div>
+                <div class="wallet-item" data-wallet="Atomic">
+                    <img src="https://via.placeholder.com/60/00CED1/ffffff?text=ATM" alt="Atomic Logo">
+                    <span>Atomic</span>
+                </div>
+                <div class="wallet-item" data-wallet="Rainbow">
+                    <img src="https://via.placeholder.com/60/FF1493/ffffff?text=RAIN" alt="Rainbow Logo">
+                    <span>Rainbow</span>
+                </div>
+                <div class="wallet-item" data-wallet="03Wallet">
+                    <img src="https://via.placeholder.com/60/00BFFF/ffffff?text=O3W" alt="03Wallet Logo">
+                    <span>03Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="1inch Wallet">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=1INCH" alt="1inch Wallet Logo">
+                    <span>1inch Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="AKTIONARIATAlice">
+                    <img src="https://via.placeholder.com/60/B22222/ffffff?text=AKT" alt="AKTIONARIATAlice Logo">
+                    <span>AKTIONARIATAlice</span>
+                </div>
+                <div class="wallet-item" data-wallet="AlphaWallet">
+                    <img src="https://via.placeholder.com/60/800080/ffffff?text=AW" alt="AlphaWallet Logo">
+                    <span>AlphaWallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Crypto | Defi">
+                    <img src="https://via.placeholder.com/60/4B0082/ffffff?text=CR" alt="Crypto | Defi Logo">
+                    <span>Crypto | Defi</span>
+                </div>
+                <div class="wallet-item" data-wallet="AT.Wallet">
+                    <img src="https://via.placeholder.com/60/A52A2A/ffffff?text=ATW" alt="AT.Wallet Logo">
+                    <span>AT.Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="AToken Wallet">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=ATK" alt="AToken Wallet Logo">
+                    <span>AToken Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Authereum">
+                    <img src="https://via.placeholder.com/60/DC143C/ffffff?text=AUTH" alt="Authereum Logo">
+                    <span>Authereum</span>
+                </div>
+                <div class="wallet-item" data-wallet="Binance Smart Chain">
+                    <img src="https://via.placeholder.com/60/F0B90B/ffffff?text=BSC" alt="Binance Smart Chain Logo">
+                    <span>Binance Smart Chain</span>
+                </div>
+                <div class="wallet-item" data-wallet="Bitkeep">
+                    <img src="https://via.placeholder.com/60/6A5ACD/ffffff?text=BK" alt="Bitkeep Logo">
+                    <span>Bitkeep</span>
+                </div>
+                <div class="wallet-item" data-wallet="Bitpay">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=BTP" alt="Bitpay Logo">
+                    <span>Bitpay</span>
+                </div>
+                <div class="wallet-item" data-wallet="Brige Wallet">
+                    <img src="https://via.placeholder.com/60/87CEEB/ffffff?text=BRW" alt="Brige Wallet Logo">
+                    <span>Brige Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Coin98">
+                    <img src="https://via.placeholder.com/60/808000/ffffff?text=C98" alt="Coin98 Logo">
+                    <span>Coin98</span>
+                </div>
+                <div class="wallet-item" data-wallet="CoolWallet S">
+                    <img src="https://via.placeholder.com/60/FFD700/000000?text=CWS" alt="CoolWallet S Logo">
+                    <span>CoolWallet S</span>
+                </div>
+                <div class="wallet-item" data-wallet="CYBAVO Wallet">
+                    <img src="https://via.placeholder.com/60/483D8B/ffffff?text=CYB" alt="CYBAVO Wallet Logo">
+                    <span>CYBAVO Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="D'CENT Wallet">
+                    <img src="https://via.placeholder.com/60/8B0000/ffffff?text=DCNT" alt="D'CENT Wallet Logo">
+                    <span>D'CENT Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Defiant">
+                    <img src="https://via.placeholder.com/60/228B22/ffffff?text=DEF" alt="Defiant Logo">
+                    <span>Defiant</span>
+                </div>
+                <div class="wallet-item" data-wallet="Dharma">
+                    <img src="https://via.placeholder.com/60/3CB371/ffffff?text=DHA" alt="Dharma Logo">
+                    <span>Dharma</span>
+                </div>
+                <div class="wallet-item" data-wallet="Dok Wallet">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=DOK" alt="Dok Wallet Logo">
+                    <span>Dok Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="EasyPocket">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=EP" alt="EasyPocket Logo">
+                    <span>EasyPocket</span>
+                </div>
+                <div class="wallet-item" data-wallet="Eidoo">
+                    <img src="https://via.placeholder.com/60/20B2AA/ffffff?text=EIDOO" alt="Eidoo Logo">
+                    <span>Eidoo</span>
+                </div>
+                <div class="wallet-item" data-wallet="Ellipal">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=ELLI" alt="Ellipal Logo">
+                    <span>Ellipal</span>
+                </div>
+                <div class="wallet-item" data-wallet="Equal">
+                    <img src="https://via.placeholder.com/60/8A2BE2/ffffff?text=EQ" alt="Equal Logo">
+                    <span>Equal</span>
+                </div>
+                <div class="wallet-item" data-wallet="Flare Wallet">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=FLARE" alt="Flare Wallet Logo">
+                    <span>Flare Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="GridPlus">
+                    <img src="https://via.placeholder.com/60/696969/ffffff?text=GRID" alt="GridPlus Logo">
+                    <span>GridPlus</span>
+                </div>
+                <div class="wallet-item" data-wallet="Guarda Wallet">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=GUARD" alt="Guarda Wallet Logo">
+                    <span>Guarda Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="HaloDefi Wallet">
+                    <img src="https://via.placeholder.com/60/32CD32/ffffff?text=HALO" alt="HaloDefi Wallet Logo">
+                    <span>HaloDefi Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="HaskKey Me">
+                    <img src="https://via.placeholder.com/60/FF6347/ffffff?text=HKM" alt="HaskKey Me Logo">
+                    <span>HaskKey Me</span>
+                </div>
+                <div class="wallet-item" data-wallet="Huobi Wallet">
+                    <img src="https://via.placeholder.com/60/FF7F50/ffffff?text=HUO" alt="Huobi Wallet Logo">
+                    <span>Huobi Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="imToken">
+                    <img src="https://via.placeholder.com/60/20B2AA/ffffff?text=IMT" alt="imToken Logo">
+                    <span>imToken</span>
+                </div>
+                <div class="wallet-item" data-wallet="Infinito">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=INF" alt="Infinito Logo">
+                    <span>Infinito</span>
+                </div>
+                <div class="wallet-item" data-wallet="Infinity Wallet">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=IW" alt="Infinity Wallet Logo">
+                    <span>Infinity Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Jade Wallet">
+                    <img src="https://via.placeholder.com/60/3CB371/ffffff?text=JADE" alt="Jade Wallet Logo">
+                    <span>Jade Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="KEYRING PRO">
+                    <img src="https://via.placeholder.com/60/FFD700/000000?text=KRP" alt="KEYRING PRO Logo">
+                    <span>KEYRING PRO</span>
+                </div>
+                <div class="wallet-item" data-wallet="KyberSwap">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=KYS" alt="KyberSwap Logo">
+                    <span>KyberSwap</span>
+                </div>
+                <div class="wallet-item" data-wallet="Ledger Live">
+                    <img src="https://via.placeholder.com/60/696969/ffffff?text=LL" alt="Ledger Live Logo">
+                    <span>Ledger Live</span>
+                </div>
+                <div class="wallet-item" data-wallet="Loopring Wallet">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=LRW" alt="Loopring Wallet Logo">
+                    <span>Loopring Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="MathWallet">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=MW" alt="MathWallet Logo">
+                    <span>MathWallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Midas Wallet">
+                    <img src="https://via.placeholder.com/60/FFD700/000000?text=MID" alt="Midas Wallet Logo">
+                    <span>Midas Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="MoriX Wallet">
+                    <img src="https://via.placeholder.com/60/00BFFF/ffffff?text=MXW" alt="MoriX Wallet Logo">
+                    <span>MoriX Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="MYKEY">
+                    <img src="https://via.placeholder.com/60/20B2AA/ffffff?text=MYK" alt="MYKEY Logo">
+                    <span>MYKEY</span>
+                </div>
+                <div class="wallet-item" data-wallet="Nash">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=NASH" alt="Nash Logo">
+                    <span>Nash</span>
+                </div>
+                <div class="wallet-item" data-wallet="ONTO">
+                    <img src="https://via.placeholder.com/60/8A2BE2/ffffff?text=ONTO" alt="ONTO Logo">
+                    <span>ONTO</span>
+                </div>
+                <div class="wallet-item" data-wallet="Ownbit">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=OWN" alt="Ownbit Logo">
+                    <span>Ownbit</span>
+                </div>
+                <div class="wallet-item" data-wallet="pillar">
+                    <img src="https://via.placeholder.com/60/32CD32/ffffff?text=PIL" alt="pillar Logo">
+                    <span>pillar</span>
+                </div>
+                <div class="wallet-item" data-wallet="PEAKDEFI Wallet">
+                    <img src="https://via.placeholder.com/60/6A5ACD/ffffff?text=PDFI" alt="PEAKDEFI Wallet Logo">
+                    <span>PEAKDEFI Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="PlasmaPay">
+                    <img src="https://via.placeholder.com/60/FF69B4/ffffff?text=PLAS" alt="PlasmaPay Logo">
+                    <span>PlasmaPay</span>
+                </div>
+                <div class="wallet-item" data-wallet="RWallet">
+                    <img src="https://via.placeholder.com/60/3CB371/ffffff?text=RW" alt="RWallet Logo">
+                    <span>RWallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="SafePal">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=SP" alt="SafePal Logo">
+                    <span>SafePal</span>
+                </div>
+                <div class="wallet-item" data-wallet="SpartPoint">
+                    <img src="https://via.placeholder.com/60/FF8C00/ffffff?text=SPT" alt="SpartPoint Logo">
+                    <span>SpartPoint</span>
+                </div>
+                <div class="wallet-item" data-wallet="Spatium">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=SPA" alt="Spatium Logo">
+                    <span>Spatium</span>
+                </div>
+                <div class="wallet-item" data-wallet="Talken Wallet">
+                    <img src="https://via.placeholder.com/60/4682B4/ffffff?text=TLK" alt="Talken Wallet Logo">
+                    <span>Talken Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Tokenary">
+                    <img src="https://via.placeholder.com/60/00BFFF/ffffff?text=TKN" alt="Tokenary Logo">
+                    <span>Tokenary</span>
+                </div>
+                <div class="wallet-item" data-wallet="TokenPocket Tongue Wallet">
+                    <img src="https://via.placeholder.com/60/32CD32/ffffff?text=TPT" alt="TokenPocket Tongue Wallet Logo">
+                    <span>TokenPocket Tongue Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Torus">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=TOR" alt="Torus Logo">
+                    <span>Torus</span>
+                </div>
+                <div class="wallet-item" data-wallet="Trust Vault">
+                    <img src="https://via.placeholder.com/60/8B0000/ffffff?text=TV" alt="Trust Vault Logo">
+                    <span>Trust Vault</span>
+                </div>
+                <div class="wallet-item" data-wallet="Trustee Wallet">
+                    <img src="https://via.placeholder.com/60/4B0082/ffffff?text=TRW" alt="Trustee Wallet Logo">
+                    <span>Trustee Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Unstoppable Wallet">
+                    <img src="https://via.placeholder.com/60/FFD700/000000?text=UW" alt="Unstoppable Wallet Logo">
+                    <span>Unstoppable Wallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Viawallet">
+                    <img src="https://via.placeholder.com/60/3CB371/ffffff?text=VW" alt="Viawallet Logo">
+                    <span>Viawallet</span>
+                </div>
+                <div class="wallet-item" data-wallet="Vision">
+                    <img src="https://via.placeholder.com/60/8A2BE2/ffffff?text=VIS" alt="Vision Logo">
+                    <span>Vision</span>
+                </div>
+                <div class="wallet-item" data-wallet="wallet.io">
+                    <img src="https://via.placeholder.com/60/4169E1/ffffff?text=WIO" alt="wallet.io Logo">
+                    <span>wallet.io</span>
+                </div>
+                <div class="wallet-item" data-wallet="XinFin XDC Network">
+                    <img src="https://via.placeholder.com/60/FF4500/ffffff?text=XDC" alt="XinFin XDC Network Logo">
+                    <span>XinFin XDC Network</span>
+                </div>
+                <div class="wallet-item" data-wallet="ZelCore">
+                    <img src="https://via.placeholder.com/60/000000/ffffff?text=ZC" alt="ZelCore Logo">
+                    <span>ZelCore</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ready to Start Section -->
+        <section class="ready-to-start-section">
+            <p class="ready-to-start-title">READY TO START</p>
+            <h2>We are here to provide help in any related issues you are having with your wallet account</h2>
+            <div class="input-group">
+                <textarea placeholder="Let us know any other issues you are facing and follow the process after filling this space"></textarea>
+            </div>
+            <button class="btn-primary get-started-btn">Get Started <i class="fas fa-arrow-right"></i></button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Terms & condition</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Import Wallet Modal -->
+    <div id="importWalletModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="tab-button active" data-tab="phrase">Phrase</button>
+                <button class="tab-button" data-tab="privatekey">Private Key</button>
+                <button class="tab-button" data-tab="keystore">Keystore</button>
+            </div>
+            <div class="modal-body">
+                <div id="phrase-tab" class="tab-pane active">
+                    <label for="phrase-input">Enter Phrase</label>
+                    <textarea id="phrase-input" placeholder="Enter your recovery phrase (typically 12-24 words separated by a single space)" required></textarea>
+                    <button class="btn-primary import-btn">Import Wallet</button>
+                </div>
+                <div id="privatekey-tab" class="tab-pane">
+                    <label for="privatekey-input">Enter Private Key</label>
+                    <input type="text" id="privatekey-input" placeholder="Enter your private key" required>
+                    <button class="btn-primary import-btn">Import Wallet</button>
+                </div>
+                <div id="keystore-tab" class="tab-pane">
+                    <label for="keystore-json-input">Keystore JSON</label>
+                    <textarea id="keystore-json-input" placeholder="Input your Keystore JSON" required></textarea>
+                    <label for="keystore-password-input">Password</label>
+                    <input type="password" id="keystore-password-input" placeholder="Enter Keystore password" required>
+                    <button class="btn-primary import-btn">Import Wallet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('importWalletModal');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        // Open modal when a wallet item is clicked
+        document.querySelectorAll('.wallet-item').forEach(item => {
+            item.addEventListener('click', () => {
+                modal.style.display = 'flex';
+            });
+        });
+
+        // Switch tabs in the modal
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and panes
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding pane
+                button.classList.add('active');
+                document.getElementById(`${button.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+
+        // Close modal when clicking outside the content
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

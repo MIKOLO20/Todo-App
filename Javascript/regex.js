@@ -32,8 +32,18 @@ const submitForm = () =>{
      document.getElementById("emailW").innerHTML = `<p class="text-danger">Email must be valid</p>`
   } if(!phoneTest){
     alert("wrong number")
+  }if(!passwordTest){
+    document.getElementById("password").style.border = "2px solid red !important";
+     document.getElementById("password").style.borderColor = "red";
+     document.getElementById("passwordW").innerHTML = `<p class="text-danger">Password must contain at least one uppercase letter, one lowercase letter, one special character, and be at least 4 characters long</p>`
+  } else if(password != conPassword){
+    document.getElementById("con").style.border = "2px solid red !important";
+     document.getElementById("con").style.borderColor = "red";
+     document.getElementById("conPasswordW").innerHTML = `<p class="text-danger">Password do not match</p>`
+  } else{
+    alert("form submitted successfully")
   }
-
+  
 }
 
 const phoneCheck = ()=>{
