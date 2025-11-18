@@ -8,18 +8,20 @@
 </head>
 <body>
     <div class="mx-auto col-7 rounded-4 shadow p-3 my-4 border">
-        <h1>sign up page</h1>
+        <h1 class="text-center">sign up page</h1>
         <input class="form-control mt-3" type="text" name="" id="firstname" placeholder="Enter first name">
           <input class="form-control mt-3" type="text" name="" id="lastname" placeholder="Enter last name">
-            <input class="form-control mt-3" type="text" name="" id="email" placeholder="Enter email ">
-             <input class="form-control mt-3" type="text" name="" id="password" placeholder="password ">
+            <input class="form-control mt-3" type="email" name="" id="email" placeholder="Enter email ">
+             <input class="form-control mt-3" type="password" name="" id="password" placeholder="password ">
             <button id="registerUser" class="btn btn-success mt-3 form-control">sign Up</button>
+            <button id="google" class="btn btn-info my-3 mt-3 text-dark form-control">Google sign Up</button>
     </div>
    <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider,  signInWithPopup } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -39,6 +41,8 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
 
 
 document.getElementById("registerUser").addEventListener("click", ()=>{
@@ -59,7 +63,29 @@ document.getElementById("registerUser").addEventListener("click", ()=>{
             console.log(error)
           })
 })
-   
+  google.addEventListener("click", ()=>{
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    console.log(result)
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+     console.log(error)
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+  }) 
 </script>
 
 </body>
