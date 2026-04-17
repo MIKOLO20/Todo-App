@@ -46,6 +46,7 @@ function displayUser(){
         <h1> Lastname:${user.lastname}</h1>
         <h1> Email:${user.email}</h1>
         <h1>Address: ${user.address}</h1>
+        <button class="btn btn-warning text-white" onclick ="deleteUser(${i})">Delete</button>
         </hr>`;
     })
     document.getElementById("display").innerHTML = visible;
@@ -67,6 +68,9 @@ function displayUser(){
    if(foundUser.length == 0){
     alert("invalid search")
    }
+   else if (query == ""){
+    alert("input a search")
+   }
     else{
         foundUser.map((foundUser, i) =>{
             show += `
@@ -79,4 +83,9 @@ function displayUser(){
         })
     }
     document.getElementById("body").innerHTML = show;
+ }
+ const deleteUser = (i) =>{
+    userArr.splice(i, 1)
+    displayUser()
+    localStorage.setItem("userArr", JSON.stringify(userArr))
  }

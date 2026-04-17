@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple E-commerce (HTML/CSS/JS)</title>
+  <style>
+    /* ===== styles.css (embedded for convenience) ===== */
+    :root{--accent:#0b84ff;--muted:#666}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Arial;margin:0;background:#f6f8fb;color:#111}
+    header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;background:#fff;box-shadow:0 1px 6px rgba(20,30,50,.06)}
+    .brand{font-weight:700}
+    .controls{display:flex;gap:.5rem;align-items:center}
+    .btn{border:0;padding:.5rem .75rem;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
+    .ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,132,255,.12)}
+    main{padding:1.25rem;max-width:1100px;margin:0 auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+    .card{background:#fff;border-radius:12px;padding:1rem;box-shadow:0 6px 18px rgba(12,20,40,.06);display:flex;flex-direction:column;gap:.5rem}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+    .price{font-weight:700}
+    .muted{color:var(--muted);font-size:.9rem}
+    .cart-count{background:#ff3b30;color:#fff;border-radius:999px;padding:0 .5rem;font-weight:700;margin-left:.25rem}
+    .actions{margin-top:auto;display:flex;gap:.5rem}
+    /* modal */
+    .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center}
+    .modal{background:#fff;padding:1rem;border-radius:10px;max-width:420px;width:100%}
+    .form-row{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.6rem}
+    input[type="text"],input[type="email"],input[type="password"]{padding:.6rem;border-radius:8px;border:1px solid #e6e9ef}
+    /* responsive */
+    @media (max-width:520px){ .card img{height:140px} header{padding:.75rem} main{padding:.75rem} }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">MyShop</div>
+  <div class="controls">
+    <div class="muted" id="userGreeting">Not signed in</div>
+    <button class="btn ghost" id="authBtn">Sign up / Sign in</button>
+    <button class="btn" id="viewCartBtn">Cart <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</header>
+
+<main>
+  <h2>Products</h2>
+  <div class="grid" id="productsGrid">
+    <!-- product cards injected here -->
+  </div>
+</main>
+
+<!-- Modal: Auth / Cart (single modal reused) -->
+<div class="modal-back" id="modalBack">
+  <div class="modal" id="modalContent">
+    <!-- dynamic content -->
+  </div>
+</div>
+
+<script>
+/* ===== app.js (embedded) ===== */
+/* --- Utility: localStorage wrapper --- */
+const DB = {
+  get(key){ try { return JSON.parse(localStorage.getItem(key)) ?? null } catch(e){ return null } },
+  set(key,val){ localStorage.setItem(key, JSON.stringify(val)) },
+  remove(key){ localStorage.removeItem(key) }
+};
+
+/* --- Demo product data (use this if offline) --- */
+const demoProducts = [
+  { id:1, title:"Classic White T-Shirt", price:12.99, desc:"Comfortable cotton tee", image:"https://picsum.photos/seed/p1/400/400" },
+  { id:2, title:"Running Sneakers", price:49.99, desc:"Lightweight running shoes", image:"https://picsum.photos/seed/p2/400/400" },
+  { id:3, title:"Bluetooth Headphones", price:29.99, desc:"Wireless over-ear", image:"https://picsum.photos/seed/p3/400/400" },
+  { id:4, title:"Slim Wallet", price:9.50, desc:"Minimal leather wallet", image:"https://picsum.photos/seed/p4/400/400" },
+  { id:5, title:"Coffee Mug", price:7.50, desc:"Ceramic, 350ml", image:"https://picsum.photos/seed/p5/400/400" }
+];
+
+/* --- State --- */
+let products = [];
+let cart = DB.get('cart') || { items: [] };
+let users = DB.get('users') || [];      // array of {email, password}
+let currentUser = DB.get('currentUser') || null;
+
+/* --- Initialize: load products (try remote, fallback to demo) --- */
+async function loadProducts(){
+  try{
+    // OPTIONAL: fetch demo API (uncomment to use live API)
+    // let res = await fetch('https://fakestoreapi.com/products'); // CORS may apply
+    // products = await res.json();
+    // map to our format if needed...
+    products = demoProducts;
+  }catch(e){
+    products = demoProducts;
+  }
+}
+
+/* --- Render products --- */
+function renderProducts(){
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  products.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" />
+      <div><strong>${escapeHtml(p.title)}</strong></div>
+      <div class="muted">${escapeHtml(p.desc)}</div>
+      <div class="price">$${Number(p.price).toFixed(2)}</div>
+      <div class="actions">
+        <button class="btn addBtn">Add to cart</button>
+        <button class="ghost" onclick="showProduct(${p.id})">View</button>
+      </div>
+    `;
+    card.querySelector('.addBtn').addEventListener('click', ()=> addToCart(p.id));
+    grid.appendChild(card);
+  })
+}
+
+/* --- Cart logic --- */
+function addToCart(productId){
+  const item = cart.items.find(i=>i.id===productId);
+  if(item) item.qty++;
+  else cart.items.push({ id:productId, qty:1 });
+  DB.set('cart', cart);
+  updateCartCount();
+  showToast("Added to cart");
+}
+
+function updateCartCount(){
+  const count = cart.items.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent = count;
+}
+
+/* --- Auth logic (simple) --- */
+function signUp(email,password){
+  if(users.find(u=>u.email===email)) return { ok:false, msg:'User exists' };
+  users.push({ email, password });
+  DB.set('users', users);
+  return { ok:true };
+}
+function signIn(email,password){
+  const u = users.find(u=>u.email===email && u.password===password);
+  if(!u) return { ok:false, msg:'Invalid credentials' };
+  currentUser = { email };
+  DB.set('currentUser', currentUser);
+  return { ok:true, user:currentUser };
+}
+function signOut(){
+  currentUser = null;
+  DB.remove('currentUser');
+  renderUserGreeting();
+}
+
+/* --- UI helpers: modal, toasts, render user --- */
+function openModal(html){
+  document.getElementById('modalContent').innerHTML = html;
+  const mb = document.getElementById('modalBack');
+  mb.style.display = 'flex';
+}
+function closeModal(){ document.getElementById('modalBack').style.display = 'none'; }
+function showToast(msg){
+  // simple browser alert replacement
+  const el = document.createElement('div');
+  el.textContent = msg;
+  Object.assign(el.style,{position:'fixed',left:'50%',transform:'translateX(-50%)',bottom:'20px',background:'#111',color:'#fff',padding:'8px 12px',borderRadius:'8px',opacity:0,transition:'opacity .2s'});
+  document.body.appendChild(el);
+  requestAnimationFrame(()=>el.style.opacity=1);
+  setTimeout(()=>{ el.style.opacity=0; setTimeout(()=>el.remove(),300)},1500);
+}
+function renderUserGreeting(){
+  const el = document.getElementById('userGreeting');
+  el.textContent = currentUser ? `Signed in as ${currentUser.email}` : 'Not signed in';
+  document.getElementById('authBtn').textContent = currentUser ? 'Sign out' : 'Sign up / Sign in';
+}
+
+/* --- Show product detail --- */
+function showProduct(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  openModal(`
+    <div style="display:flex;gap:1rem">
+      <img src="${p.image}" alt="${escapeHtml(p.title)}" style="width:140px;height:140px;object-fit:cover;border-radius:8px" />
+      <div>
+        <h3>${escapeHtml(p.title)}</h3>
+        <p class="muted">${escapeHtml(p.desc)}</p>
+        <div class="price">$${Number(p.price).toFixed(2)}</div>
+        <div style="margin-top:.5rem">
+          <button class="btn" id="modalAdd">Add to cart</button>
+          <button class="ghost" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  `);
+  document.getElementById('modalBack').querySelector('#modalAdd').addEventListener('click', ()=>{ addToCart(id); closeModal() });
+}
+
+/* --- Show cart --- */
+function showCart(){
+  const rows = cart.items.map(ci=>{
+    const p = products.find(x=>x.id===ci.id) || {};
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid #eee">
+      <div style="max-width:60%"><strong>${escapeHtml(p.title||'Unknown')}</strong><div class="muted">$${(p.price||0).toFixed(2)}</div></div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button class="ghost" onclick="changeQty(${ci.id},-1)">−</button>
+        <div>${ci.qty}</div>
+        <button class="ghost" onclick="changeQty(${ci.id},1)">+</button>
+      </div>
+    </div>`;
+  }).join('') || '<div class="muted">Cart is empty</div>';
+
+  openModal(`
+    <h3>Your cart</h3>
+    ${rows}
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.75rem">
+      <strong>Total</strong>
+      <strong>$${cartTotal().toFixed(2)}</strong>
+    </div>
+    <div style="margin-top:.75rem;display:flex;gap:.5rem;justify-content:flex-end">
+      <button class="ghost" onclick="closeModal()">Close</button>
+      <button class="btn" onclick="checkout()">Checkout</button>
+    </div>
+  `);
+}
+function cartTotal(){
+  return cart.items.reduce((sum,ci)=>{ const p=products.find(x=>x.id===ci.id); return sum + (p?.price||0)*ci.qty },0);
+}
+function changeQty(id,delta){
+  const idx = cart.items.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  cart.items[idx].qty += delta;
+  if(cart.items[idx].qty <= 0) cart.items.splice(idx,1);
+  DB.set('cart', cart);
+  updateCartCount();
+  showCart();
+}
+function checkout(){
+  if(!currentUser){
+    showToast('Please sign in to checkout');
+    showAuthModal();
+    return;
+  }
+  // For a class project, simulate checkout
+  cart = { items: [] };
+  DB.set('cart', cart);
+  updateCartCount();
+  closeModal();
+  showToast('Order placed — simulated. Add a receipt page for extra credit.');
+}
+
+/* --- Auth modal --- */
+function showAuthModal(){
+  openModal(`
+    <h3>Sign in / Sign up</h3>
+    <div class="form-row"><label>Email</label><input id="authEmail" type="email" /></div>
+    <div class="form-row"><label>Password</label><input id="authPassword" type="password" /></div>
+    <div style="display:flex;gap:.5rem;justify-content:flex-end;">
+      <button class="ghost" onclick="closeModal()">Close</button>
+      <button class="btn" id="doSignIn">Sign in</button>
+      <button class="btn ghost" id="doSignUp">Sign up</button>
+    </div>
+  `);
+  document.getElementById('modalBack').querySelector('#doSignUp').addEventListener('click', ()=>{
+    const email = document.getElementById('authEmail').value.trim();
+    const pwd = document.getElementById('authPassword').value.trim();
+    if(!email||!pwd){ showToast('Enter email + password'); return; }
+    const r = signUp(email,pwd);
+    if(!r.ok) showToast(r.msg); else { showToast('Account created'); const s=signIn(email,pwd); renderUserGreeting(); closeModal(); }
+  });
+  document.getElementById('modalBack').querySelector('#doSignIn').addEventListener('click', ()=>{
+    const email = document.getElementById('authEmail').value.trim();
+    const pwd = document.getElementById('authPassword').value.trim();
+    const r = signIn(email,pwd);
+    if(!r.ok) showToast(r.msg); else { showToast('Signed in'); renderUserGreeting(); closeModal(); }
+  });
+}
+
+/* --- Escape helper --- */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]) }
+
+/* --- Wire up top-level UI --- */
+document.getElementById('authBtn').addEventListener('click', ()=>{
+  if(currentUser) { signOut(); showToast('Signed out'); renderUserGreeting(); } else showAuthModal();
+});
+document.getElementById('viewCartBtn').addEventListener('click', showCart);
+document.getElementById('modalBack').addEventListener('click', (e)=>{ if(e.target.id==='modalBack') closeModal() });
+
+/* --- Demo: create one test user if none exist (handy for demo) --- */
+if(users.length === 0){
+  users.push({ email:'demo@school.com', password:'password123' });
+  DB.set('users', users);
+}
+
+/* --- Start --- */
+(async function init(){
+  await loadProducts();
+  renderProducts();
+  updateCartCount();
+  renderUserGreeting();
+})();
+</script>
+
+</body>
+</html>

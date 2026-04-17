@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #ff4e88, #ff9a9e);
+    overflow:hidden;
+}
+
+/* Card */
+.container{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    width:350px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    transition:0.5s ease;
+}
+
+h1{
+    margin-bottom:20px;
+    color:#ff4e88;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:2px solid #ff4e88;
+    outline:none;
+    margin-bottom:15px;
+    font-size:16px;
+    text-align:center;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#ff4e88;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#e6005c;
+}
+
+/* Love Message */
+.love-message{
+    position:absolute;
+    text-align:center;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    font-family: Arial, Helvetica, sans-serif;
+    opacity:0;
+    transform:scale(0.5);
+    transition:1s ease;
+}
+
+.love-message.show{
+    opacity:1;
+    transform:scale(0.8);
+}
+
+/* Floating Hearts */
+.heart{
+    position:absolute;
+    color:white;
+    font-size:20px;
+    animation:float 5s linear infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-800px) scale(1.5);
+        opacity:0;
+    }
+}
+@media screen and (max-width: 768px) {
+
+    body{
+        padding:20px;
+    }
+
+    .container{
+        width:100%;
+        max-width:320px;
+        padding:25px;
+    }
+
+    h1{
+        font-size:22px;
+    }
+
+    input{
+        font-size:14px;
+        padding:10px;
+    }
+
+    button{
+        font-size:14px;
+        padding:10px;
+    }
+
+    .love-message{
+        font-size:12px;
+        padding:0 20px;
+        line-height:1.4;
+    }
+
+}
+
+/* Extra small phones */
+@media screen and (max-width: 480px){
+
+    .container{
+        max-width:280px;
+        padding:20px;
+    }
+
+    .love-message{
+        font-size:22px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="formCard">
+    <h1>Enter Your Name 💕</h1>
+    <input type="text" id="nameInput" placeholder="My Beautiful Oduanyo">
+    <button onclick="showLove()">Click For Surprise 💖</button>
+</div>
+
+<div class="love-message" id="loveMessage"></div>
+
+<script>
+function showLove(){
+    const name = document.getElementById("nameInput").value;
+    const message = document.getElementById("loveMessage");
+    const card = document.getElementById("formCard");
+
+    if(name.trim() === ""){
+        alert("Please enter your beautiful name 💕");
+        return;
+    }
+
+    card.style.opacity = "0";
+    setTimeout(()=>{
+        card.style.display = "none";
+    },500);
+
+    message.innerHTML =  "Happy Valentine’s Day, " + name + "❤️ I just want you to know how special you are to me.Not just todaybut every single day.You’re not just my girlfriend,you’re my happiness,my comfort,and my favorite person.Loving you is easy. It doesn’t feel forced.It doesn’t feel complicated. It just feels right.Thank you for being you.Thank you for choosing me.Today is about love,but honestly,every day with you already feels like Valentine’s Day.My Skete baby!🤣 I Love You So Much ❤️";
+    message.classList.add("show");
+     createHearts();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        document.body.appendChild(heart);
+          setTimeout(()=>{
+            heart.remove();
+        },5000);
+    },300);
+}
+</script>
+
+</body>
+</html>
